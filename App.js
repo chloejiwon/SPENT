@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{Component} from 'react';
 import { 
   StyleSheet,
   Text, 
@@ -11,16 +11,56 @@ import {
 
 const {height, width} = Dimensions.get("window");
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <StatusBar barStyle="dark-content"/>
-      <Text style={styles.title}>SPENT</Text>
-      <View style ={styles.card}>
-        <TextInput style={styles.input} placeholder={"Money"}/>
+
+class Friend extends Component{
+  render(){
+    return(
+      <View style = {{alignItems:'center'}}>
+        <TextInput 
+        style={styles.input} 
+        placeholder={"Put Friends Number"} 
+      //  value={this.newFriend}
+      //  onChangeText={this._controlFriend}
+        placeholderTextColor={"#999"}
+        returnKeyType={"done"}
+        autoCorrect={false}
+        />
       </View>
-    </View>
-  );
+    )
+  }
+}
+
+export default class App extends Component{
+  state = {
+    newFriend:"",
+    newMoney:""
+  }
+  render(){
+    const {newMoney} = this.state;
+    return (
+      <View style={styles.container}>
+        <StatusBar barStyle="dark-content"/>
+        <Text style={styles.title}>SPENT</Text>
+        <View style ={styles.card}>
+          <Friend />
+        </View>
+        <View style ={styles.card}>
+          <TextInput style={styles.input} placeholder={"Money"}/>
+        </View>
+      </View>
+    );
+  }
+  _controlMoney = text => {
+    this.setState({
+      newMoney: text
+    })
+  }
+  _controlFriend = text=>{
+    this.setState({
+      newFriend:text
+    })
+  }
+
 }
 
 const styles = StyleSheet.create({
@@ -38,8 +78,10 @@ const styles = StyleSheet.create({
   },
   card : {
     backgroundColor: "gray",
-    flex : 1,
+    flex : 0.3,
     width: width - 50,
+    marginTop:10,
+    textAlign:'center',
     ...Platform.select({
       ios:{
         shadowColor : "rgb(50,50,50)",
@@ -54,5 +96,9 @@ const styles = StyleSheet.create({
           elevation: 3
       }
     })
+  },
+  input:{
+    textAlign:'center',
+    fontSize:20
   }
 });
